@@ -11,41 +11,41 @@ jQuery(document).ready(function () {
     let lastScrollTop = 0;
     let $win = jQuery(window);
     let minScroll = $win.height();   // Get the window height.
-    let deskNavSticky = jQuery('.desktop-nav-sticky');
+    let deskNavSticky = jQuery('.desktop_nav_sticky');
+
+    // Variables for mobile:
+    let mobileAllPanels = jQuery(".mobile_nav .menu-item-has-children ul").hide();
+    let mobileBottomNav = jQuery('.mobile_bottom_nav');
+    let mobileBottomContainer = jQuery('.mobile_inner_container').hide();
+    let hamburgerAnimate = jQuery('.hamburger_menu');
+    let hamburgerTrigger = jQuery('.menu_wrapper');
+
+    // If menu has submenu (accordion):
+    let subMenuTrigger = jQuery(".menu-item-has-children a");
+    let minusIcon = jQuery('.mobile_nav .dh_ft_minus_icon');
+    let plusIcon = jQuery('.mobile_nav .dh_ft_plus_icon');
+
+    // If there's an icon outside of menu (for the staggered animation):
+    let menuIcon = jQuery('.mobile_inner_container a');
 
     $win.scroll(function(){
         let currentScrollTop = jQuery(this).scrollTop();
 
         if ( ( currentScrollTop < lastScrollTop) && (currentScrollTop > minScroll) ){
-            deskNavSticky.addClass('visible-nav').removeClass('hidden-nav');
+            deskNavSticky.addClass('visible_nav').removeClass('hidden_nav');
         } else {
-            if( deskNavSticky.hasClass('visible-nav') ){ 
-                deskNavSticky.addClass('hidden-nav').removeClass('visible-nav');
+            if( deskNavSticky.hasClass('visible_nav') ){ 
+                deskNavSticky.addClass('hidden_nav').removeClass('visible_nav');
             }
         }
         lastScrollTop = currentScrollTop;
     });
 
-    // Variables for mobile:
-    let mobileAllPanels = jQuery(".mobile-nav .menu-item-has-children ul").hide();
-    let mobileBottomNav = jQuery('.mobile-bottom-nav');
-    let mobileBottomContainer = jQuery('.mobile-inner-container').hide();
-    let hamburgerAnimate = jQuery('.hamburger-menu');
-    let hamburgerTrigger = jQuery('.menu-wrapper');
-
-    // If menu has submenu (accordion):
-    let subMenuTrigger = jQuery(".menu-item-has-children a");
-    let minusIcon = jQuery('.mobile-nav .dh-ft-minus-icon');
-    let plusIcon = jQuery('.mobile-nav .dh-ft-plus-icon');
-
-    // If there's an icon outside of menu (for the staggered animation):
-    let menuIcon = jQuery('.mobile-inner-container a');
-
     // Mobile Nav - hamburger
     (function () {
         hamburgerTrigger.on('click', function() {
             hamburgerAnimate.toggleClass('animate');
-            jQuery(document.body).toggleClass('stop-scrolling');
+            jQuery(document.body).toggleClass('stop_scrolling');
 
 
             // Open/close menu container:
@@ -56,11 +56,11 @@ jQuery(document).ready(function () {
                 });
                 
                 // Switch + and - icon:
-                plusIcon.removeClass('hide-icon');
-                minusIcon.addClass('hide-icon');
+                plusIcon.removeClass('hide_icon');
+                minusIcon.addClass('hide_icon');
 
                 // Animation menu links staggered load
-                jQuery('.mobile-bottom-nav ul li').each(function(index){
+                jQuery('.mobile_bottom_nav ul li').each(function(index){
                     // Turn the index value into a reasonable animation delay
                     var delay = 0.1 + index*0.03;
 
@@ -71,7 +71,7 @@ jQuery(document).ready(function () {
 
             } else {
                 mobileAllPanels.hide();
-                jQuery(".mobile-nav .menu-item-has-children").removeClass('active');
+                jQuery(".mobile_nav .menu-item-has-children").removeClass('active');
                 
                 mobileBottomNav.removeClass('open');
                 mobileBottomContainer.fadeToggle('fast', function() {
@@ -79,8 +79,8 @@ jQuery(document).ready(function () {
                 });
 
                 // Reset animation
-                jQuery('.mobile-bottom-nav ul li').css("animation-name", "none");
-                jQuery('.mobile-bottom-nav .mobile-inner-container a.social').css("animation-name", "none");
+                jQuery('.mobile_bottom_nav ul li').css("animation-name", "none");
+                jQuery('.mobile_bottom_nav .mobile_inner_container a.social').css("animation-name", "none");
             }
 
 
@@ -90,8 +90,8 @@ jQuery(document).ready(function () {
     // Mobile Nav - accordion (sub-menu)
     (function () {
         mobileAllPanels.removeClass('active');
-        plusIcon.removeClass('hide-icon');
-        minusIcon.addClass('hide-icon');
+        plusIcon.removeClass('hide_icon');
+        minusIcon.addClass('hide_icon');
         
         subMenuTrigger.click(function(e) {
             e.preventDefault();
@@ -105,8 +105,8 @@ jQuery(document).ready(function () {
             closest_ul.find("ul").slideUp(function() {
                 if (++count == closest_ul.find("ul").length){
                 parallel_active_links.removeClass("active");
-                            parallel_active_links.find('.dh-ft-plus-icon').removeClass('hide-icon');
-                            parallel_active_links.find('.dh-ft-minus-icon').addClass('hide-icon');
+                            parallel_active_links.find('.dh_ft_plus_icon').removeClass('hide_icon');
+                            parallel_active_links.find('.dh_ft_minus_icon').addClass('hide_icon');
                         }
             });
 
@@ -114,16 +114,16 @@ jQuery(document).ready(function () {
                 closest_li.children("ul").slideDown();
                 closest_li.addClass("active");
                 
-                // jQuery('.mobile-nav .arrow-icon img').addClass('rotate');
-                link.find('.dh-ft-plus-icon').addClass('hide-icon');
-                link.find('.dh-ft-minus-icon').removeClass('hide-icon');
+                // jQuery('.mobile_nav .arrow_icon img').addClass('rotate');
+                link.find('.dh_ft_plus_icon').addClass('hide_icon');
+                link.find('.dh_ft_minus_icon').removeClass('hide_icon');
             }
         })
         
 
-        jQuery(".mobile-nav .sub-menu a").click(function(e) {
+        jQuery(".mobile_nav .sub_menu a").click(function(e) {
             hamburgerAnimate.toggleClass('animate');
-            jQuery(document.body).toggleClass('stop-scrolling');
+            jQuery(document.body).toggleClass('stop_scrolling');
             mobileBottomNav.addClass('open');
             mobileBottomNav.slideToggle(300, function() {
                 mobileBottomContainer.fadeToggle('fast');

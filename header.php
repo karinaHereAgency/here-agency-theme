@@ -28,16 +28,16 @@
 	<header id="masthead" class="site-header">
 
 		<!-- DESKTOP NAV -->
-		<nav class="desktop-nav">
-			<div class="desktop-menu-nav">
-				<div class="nav-left">
-					<a href="/" class="main-logo">
+		<nav class="desktop_nav">
+			<div class="desktop_menu_nav">
+				<div class="nav_left">
+					<a href="/" class="main_logo">
 						<img src="<?php if(get_field('header_logo', 'option')): the_field('header_logo', 'option'); endif; ?>">
 					</a>
 				</div>
 
-				<div class="nav-right">
-					<div class="main-menu-wrapper">
+				<div class="nav_right">
+					<div class="main_menu_wrapper">
 						<?php
 							wp_nav_menu(array(
 								'menu' => 2, // Change menu id.
@@ -50,16 +50,16 @@
 		</nav>
 
 		<!-- DESKTOP NAV - STICKY -->
-		<nav id="navbar" class="desktop-nav-sticky hidden-nav">
-			<div class="desktop-menu-nav">
-				<div class="nav-left">
-					<a href="/" class="main-logo">
+		<nav id="navbar" class="desktop_nav_sticky hidden_nav">
+			<div class="desktop_menu_nav">
+				<div class="nav_left">
+					<a href="/" class="main_logo">
 					<img src="<?php if(get_field('header_logo', 'option')): the_field('header_logo', 'option'); endif; ?>">
 					</a>
 				</div>
 
-				<div class="nav-right">
-					<div class="main-menu-wrapper">
+				<div class="nav_right">
+					<div class="main_menu_wrapper">
 
 						<?php
 							wp_nav_menu(array(
@@ -73,25 +73,25 @@
 		</nav>
 
 		<!-- MOBILE NAV - HAMBURGER ICON -->
-		<nav class="mobile-nav">
+		<nav class="mobile_nav">
 
-			<div class="mobile-top-nav">
-				<div class="mobile-top-left">
-					<a href="/" class="main-logo-mobile">
+			<div class="mobile_top_nav">
+				<div class="mobile_top_left">
+					<a href="/" class="main_logo_mobile">
 					<img src="<?php if(get_field('header_logo_mobile', 'option')): the_field('header_logo_mobile', 'option'); else: the_field('header_logo', 'option'); endif; ?>">
 					</a>
 				</div>
-				<div class="mobile-top-right">
-					<div class="hamburger-button">
-						<div class="menu-wrapper">
-							<div class="hamburger-menu"></div>	  
+				<div class="mobile_top_right">
+					<div class="hamburger_button">
+						<div class="menu_wrapper">
+							<div class="hamburger_menu"></div>	  
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<div class="mobile-bottom-nav">
-				<div class="mobile-inner-container">
+			<div class="mobile_bottom_nav">
+				<div class="mobile_inner_container">
 
 					<?php
 						wp_nav_menu(array(

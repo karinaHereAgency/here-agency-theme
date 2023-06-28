@@ -139,6 +139,7 @@ add_action( 'widgets_init', 'here_agency_template_widgets_init' );
  */
 function here_agency_template_scripts() {
 	wp_enqueue_style( 'here-agency-template-style', get_stylesheet_uri(), array(),filemtime(get_stylesheet_directory() .'/style.css')  );
+
 	wp_style_add_data( 'here-agency-template-style', 'rtl', 'replace' );
 
 	wp_enqueue_script( 'here-agency-template-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
@@ -185,30 +186,66 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 * Custom - Enqueue scripts and styles
 **/
 function add_custom_script(){
+
+	/** THIRD PART LIBRARIES:	**/
+
 	// SLICK CARROUSEL
 	wp_enqueue_style('Slick-css', get_theme_file_uri('/assets/css/slick/slick.css'));
 	wp_enqueue_style('Slick-theme-css', get_theme_file_uri('/assets/css/slick/slick-theme.css'));
 	wp_enqueue_script('Slick-js', get_theme_file_uri('/js/slick/slick.js'), array('jquery'));
 
-	// Global
-	wp_enqueue_script( 'Header-scripts', get_theme_file_uri('/js/header.js'), array(), filemtime(get_theme_file_path('/js/header.js')), true );			
-
+	// AOS 
+	// wp_enqueue_style('AOS-css', get_theme_file_uri('/assets/css/aos/aos.css'));
+	// wp_enqueue_script('AOS-js', get_theme_file_uri('/js/aos/aos.js'), array('jquery'), filemtime(get_theme_file_path('/js/aos/aos.js')) );
+	
+	// GSAP
+	// wp_enqueue_script( 'GSAP-js', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js', array(), null, true );  
+	// wp_enqueue_script( 'GSAP_scroll-js', 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/ScrollTrigger.min.js', array(), null, true );  
+	
 	// Froogaloop Vimeo API
 	// wp_enqueue_script('Froogaloop-js', 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/froogaloop.js',array(), '1.0.0', true );
 
-	// Enqueue scripts per page
+	/** Custom Global:	**/
+	wp_enqueue_style('HA-Global-style', get_theme_file_uri('/assets/css/ha_global_styles.css'),  array(),filemtime(get_stylesheet_directory() .'/assets/css/ha_global_styles.css') );
+	wp_enqueue_style('HA-Helper-Classes', get_theme_file_uri('/assets/css/ha_helper_classes.css'),  array(),filemtime(get_stylesheet_directory() .'/assets/css/ha_helper_classes.css') );
+	wp_enqueue_style('HA-Theme-style', get_theme_file_uri('/assets/css/ha_theme_style.css'),  array(),filemtime(get_stylesheet_directory() .'/assets/css/ha_theme_style.css') );
+	
+	// Header and footer script
+	wp_enqueue_script( 'Header-scripts', get_theme_file_uri('/js/header.js'), array(), filemtime(get_theme_file_path('/js/header.js')), true );			
+	wp_enqueue_script( 'Footer-scripts', get_theme_file_uri('/js/footer.js'), array(), filemtime(get_theme_file_path('/js/footer.js')), true );			
+
+	
+	/** Enqueue custom scripts per page: **/
+	// Pages:
 	if(is_page()){
 		global $wp_query;
-		
-		//Check which template is assigned to current page we are looking at
 		$template_name = get_post_meta( $wp_query->post->ID, '_wp_page_template', true );
 
 		if($template_name == 'page-home.php'){
 			wp_enqueue_script( 'Home-scripts', get_theme_file_uri('/js/home.js'), array(), filemtime(get_theme_file_path('/js/home.js')), true );
-		} 
+			wp_enqueue_style('Home-style', get_theme_file_uri('/assets/css/pages/page_home_styles.css'),  array(),filemtime(get_stylesheet_directory() .'/assets/css/pages/page_home_styles.css') );
+			// wp_enqueue_script( 'Marquee-scripts', get_theme_file_uri('/js/marquees.js'), array(), filemtime(get_theme_file_path('/js/marquees.js')), true );
+		}
+	}
+	// Posts:
+	else {
+
 	}
 }
 add_action( 'wp_enqueue_scripts', 'add_custom_script');
+
+
+/* Display ACF content on page Preview */ 
+add_filter('_wp_post_revision_fields', 'add_field_debug_preview');
+function add_field_debug_preview($fields){
+   $fields["debug_preview"] = "debug_preview";
+   return $fields;
+}
+
+add_action( 'edit_form_after_title', 'add_input_debug_preview' );
+function add_input_debug_preview() {
+   echo '<input type="hidden" name="debug_preview" value="debug_preview">';
+}
 
 /** 
 * Options page - Global ACF 
@@ -276,7 +313,7 @@ function my_acf_op_init() {
 //             'has_archive' => true,
 //             'rewrite' => array('slug' => 'customPost'),
 //             'show_in_rest' => true,
-// 			'supports' => array('title', 'editor', 'thumbnail'),
+// 							'supports' => array('title', 'editor', 'thumbnail', 'page-attributes'),
 //         )
 //     );
 // }
